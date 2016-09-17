@@ -1,0 +1,54 @@
+{
+  "name": "typings-for-css-modules-loader",
+  "version": "0.0.1",
+  "description": "Drop-in replacement for css-loader to generate typings for your CSS-Modules on the fly in webpack",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "prepublish": "npm run build",
+    "pretest": "rm -f ./test/example.css.d.ts && touch ./test/example.css.d.ts",
+    "test:run": "babel-node ./node_modules/webpack/bin/webpack --config ./test/webpack.config.babel.js && diff ./test/example.css.d.ts ./test/expected-example.css.d.ts",
+    "test": "npm run test:run > /dev/null 2>&1 && npm run test:run"
+  },
+  "author": "Tim Sebastian <tim.sebastian@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "Typescript",
+    "TypeScript",
+    "CSS Modules",
+    "CSSModules",
+    "CSS Modules typings",
+    "Webpack",
+    "Webpack loader",
+    "Webpack css module typings loader",
+    "typescript webpack typings",
+    "css modules webpack typings"
+  ],
+  "dependencies": {
+    "graceful-fs": "4.1.4"
+  },
+  "devDependencies": {
+    "babel-cli": "6.10.1",
+    "babel-eslint": "6.1.0",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-stage-0": "6.5.0",
+    "eslint": "2.13.1",
+    "eslint-plugin-babel": "3.3.0",
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.2"
+  },
+  "peerDependencies": {
+    "css-loader": "^0.23.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jimdo/typings-for-css-modules-loader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jimdo/typings-for-css-modules-loader/issues"
+  },
+  "homepage": "https://github.com/Jimdo/typings-for-css-modules-loader#readme"
+}
