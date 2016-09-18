@@ -41,7 +41,7 @@
     "webpack": "^1.13.2"
   },
   "peerDependencies": {
-    "css-loader": "^0.23.1"
+    "css-loader": ">=0.23.1"
   },
   "repository": {
     "type": "git",
