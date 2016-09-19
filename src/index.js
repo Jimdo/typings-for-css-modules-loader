@@ -2,7 +2,7 @@ import cssLoader from 'css-loader';
 import cssLocalsLoader from 'css-loader/locals';
 import loaderUtils from 'loader-utils';
 import {
-  generateInterface,
+  generateGenericExportInterface,
   filenameToTypingsFilename,
 } from './cssModuleToInterface';
 import * as persist from './persist';
@@ -32,7 +32,7 @@ module.exports = function(input) {
 
     let cssModuleKeys = Object.keys(this.exec(content, this.resource));
 
-    const cssModuleInterface = generateInterface(cssModuleKeys, requestedResource);
+    const cssModuleInterface = generateGenericExportInterface(cssModuleKeys, requestedResource);
     persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleInterface);
     // mock async step 3 - make `async` return the actual callback again before calling the 'real' css-loader
     delegateToCssLoader(this, input, callback);
