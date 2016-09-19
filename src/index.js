@@ -1,6 +1,8 @@
 import cssLoader from 'css-loader';
 import cssLocalsLoader from 'css-loader/locals';
 import loaderUtils from 'loader-utils';
+import 'colour';
+
 import {
   filterNonWordClasses,
   generateNamedExports,
@@ -23,7 +25,7 @@ module.exports = function(input) {
   const query = loaderUtils.parseQuery(this.query);
   const moduleMode = query.modules || query.module;
   if (!moduleMode) {
-    console.warn('Typings for CSS-Modules: option `modules` is not active - skipping extraction work...');
+    console.warn('Typings for CSS-Modules: option `modules` is not active - skipping extraction work...').red;
     return delegateToCssLoader(ctx, input, callback);
   }
 
@@ -42,8 +44,8 @@ module.exports = function(input) {
       if (skippedDefinitions.length > 0 && !query.camelCase) {
         console.warn(`Typings for CSS-Modules: option 'namedExport' was set but 'camelCase' for the css-loader not.
 The following classes will not be available as named exports:
-${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n')}
-`)
+${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
+`.yellow);
       }
       cssModuleDefinition = generateNamedExports(cleanedDefinitions);
     }

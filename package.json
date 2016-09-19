@@ -30,6 +30,7 @@
     "css modules webpack typings"
   ],
   "dependencies": {
+    "colour": "0.7.1",
     "css-loader": ">=0.23.1",
     "graceful-fs": "4.1.4",
     "loader-utils": "0.2.16"
