@@ -6,8 +6,8 @@ const filenameToInterfaceName = (filename) => {
     .replace(/\W+(\w)/g, (_, c) => c.toUpperCase());
 };
 
-const cssModuleToTypescriptInterfaceProperties = (cssModuleObject, indent = '  ') => {
-  return Object.keys(cssModuleObject)
+const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, indent = '  ') => {
+  return cssModuleKeys
     .map((key) => `${indent}'${key}': string;`)
     .join('\n');
 };
@@ -18,9 +18,9 @@ export const filenameToTypingsFilename = (filename) => {
   return path.join(dirName, `${baseName}.d.ts`);
 };
 
-export const generateInterface = (cssModuleObject, filename, indent) => {
+export const generateInterface = (cssModuleKeys, filename, indent) => {
   const interfaceName = filenameToInterfaceName(filename);
-  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleObject, indent);
+  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, indent);
   return (
 `export interface ${interfaceName} {
 ${interfaceProperties}

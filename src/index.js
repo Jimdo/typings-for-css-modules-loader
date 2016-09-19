@@ -27,11 +27,12 @@ module.exports = function(input) {
 
   // mock async step 2 - offer css loader a "fake" callback
   this.async = () => (err, content) => {
-    const cssmodules = this.exec(content, this.resource);
     const requestedResource = this.resourcePath;
-
     const cssModuleInterfaceFilename = filenameToTypingsFilename(requestedResource);
-    const cssModuleInterface = generateInterface(cssmodules, requestedResource);
+
+    let cssModuleKeys = Object.keys(this.exec(content, this.resource));
+
+    const cssModuleInterface = generateInterface(cssModuleKeys, requestedResource);
     persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleInterface);
     // mock async step 3 - make `async` return the actual callback again before calling the 'real' css-loader
     delegateToCssLoader(this, input, callback);
