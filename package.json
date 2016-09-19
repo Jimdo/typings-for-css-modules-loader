@@ -25,7 +25,8 @@
     "css modules webpack typings"
   ],
   "dependencies": {
-    "graceful-fs": "4.1.4"
+    "graceful-fs": "4.1.4",
+    "loader-utils": "0.2.16"
   },
   "devDependencies": {
     "babel-cli": "6.10.1",
