@@ -13,7 +13,7 @@ module.exports = function(input) {
   const callback = this.async();
   // mock async step 2 - offer css loader a "fake" callback
   this.async = () => (err, content) => {
-    const cssmodules = this.exec(content);
+    const cssmodules = this.exec(content, this.resource);
     const requestedResource = this.resourcePath;
 
     const cssModuleInterfaceFilename = filenameToTypingsFilename(requestedResource);
