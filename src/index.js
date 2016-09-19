@@ -2,6 +2,8 @@ import cssLoader from 'css-loader';
 import cssLocalsLoader from 'css-loader/locals';
 import loaderUtils from 'loader-utils';
 import {
+  filterNonWordClasses,
+  generateNamedExports,
   generateGenericExportInterface,
   filenameToTypingsFilename,
 } from './cssModuleToInterface';
@@ -27,13 +29,25 @@ module.exports = function(input) {
 
   // mock async step 2 - offer css loader a "fake" callback
   this.async = () => (err, content) => {
-    const requestedResource = this.resourcePath;
-    const cssModuleInterfaceFilename = filenameToTypingsFilename(requestedResource);
+    const filename = this.resourcePath;
+    const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);
 
     let cssModuleKeys = Object.keys(this.exec(content, this.resource));
 
-    const cssModuleInterface = generateGenericExportInterface(cssModuleKeys, requestedResource);
-    persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleInterface);
+    let cssModuleDefinition;
+    if (!query.namedExport) {
+      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename);
+    } else {
+      const [cleanedDefinitions, skippedDefinitions] = filterNonWordClasses(cssModuleKeys);
+      if (skippedDefinitions.length > 0 && !query.camelCase) {
+        console.warn(`Typings for CSS-Modules: option 'namedExport' was set but 'camelCase' for the css-loader not.
+The following classes will not be available as named exports:
+${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n')}
+`)
+      }
+      cssModuleDefinition = generateNamedExports(cleanedDefinitions);
+    }
+    persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleDefinition);
     // mock async step 3 - make `async` return the actual callback again before calling the 'real' css-loader
     delegateToCssLoader(this, input, callback);
   };
