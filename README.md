@@ -78,7 +78,7 @@ webpackConfig.module.loaders: [
 
 ## Example
 
-Imagine you have a file `~/my-project/src/component/MyComponent/component.scss` in your project with the following content:
+Imagine you have a file `~/my-project/src/component/MyComponent/myComponent.scss` in your project with the following content:
 ```css
 .some-class {
   // some styles
@@ -91,7 +91,7 @@ Imagine you have a file `~/my-project/src/component/MyComponent/component.scss` 
 }
 ```
 
-Adding the `typings-for-css-modules-loader` will generate a file `~/my-project/src/component/MyComponent/mycomponent.scss.d.ts` that has the following content:
+Adding the `typings-for-css-modules-loader` will generate a file `~/my-project/src/component/MyComponent/myComponent.scss.d.ts` that has the following content:
 ```ts
 export interface IMyComponentScss {
   'some-class': string;
@@ -103,8 +103,8 @@ declare const styles: IMyComponentScss;
 export default styles;
 ```
 
-### using `namedExport`
-Using the `namedExport`-option the generated file will look as follow:
+### using `namedExport` with the `camelCase`-option
+Using the `namedExport` as well as the `camelCase` options the generated file will look as follow:
 ```ts
 export const someClass: string;
 export const someOtherClass: string;
