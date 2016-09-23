@@ -6,8 +6,9 @@
   "scripts": {
     "build": "babel src -d lib",
     "prepublish": "npm run build",
-    "pretest": "rm -f ./test/example.css.d.ts && touch ./test/example.css.d.ts",
-    "test:run": "babel-node ./node_modules/webpack/bin/webpack --config ./test/webpack.config.babel.js && diff ./test/example.css.d.ts ./test/expected-example.css.d.ts",
+    "pretest": "rm -f ./test/example*.css.d.ts",
+    "test:diff": "(cd test; set -e; for f in example*css.d.ts; do diff $f expected-$f; done;)",
+    "test:run": "babel-node ./node_modules/webpack/bin/webpack --config ./test/webpack.config.babel.js && npm run test:diff",
     "test": "npm run test:run > /dev/null 2>&1 && npm run test:run"
   },
   "author": "Tim Sebastian <tim.sebastian@gmail.com>",
@@ -25,6 +26,7 @@
     "css modules webpack typings"
   ],
   "dependencies": {
+    "colour": "0.7.1",
     "css-loader": ">=0.23.1",
     "graceful-fs": "4.1.4",
     "loader-utils": "0.2.16"

@@ -7,7 +7,10 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.ts$/, loaders: ['babel', 'ts'] },
-      { test: /\.css$/, loader: '../src/index.js?modules' }
+      { test: /example.css$/, loader: '../src/index.js?modules' },
+      { test: /example-camelcase.css$/, loader: '../src/index.js?modules&camelCase' },
+      { test: /example-namedexport.css$/, loader: '../src/index.js?modules&namedExport' },
+      { test: /example-camelcase-namedexport.css$/, loader: '../src/index.js?modules&camelCase&namedExport' }
     ]
   }
 };

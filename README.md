@@ -6,6 +6,55 @@ Webpack loader that works as a css-loader drop-in replacement to generate TypeSc
 
 Install via npm `npm install --save-dev typings-for-css-modules-loader`
 
+## Options
+
+Just like any other loader you can specify options e.g. as query-params
+
+### css-loader options
+Any option that your installed version of css-loader supports can be used and will be passed to it.
+
+### `namedExport`-option
+As your fellow css-developer may tend to use characters like dashes(`-`) that are not valid characters for a typescript variable the default behaviour for this loader is to export an interface as the default export that contains the classnames as properties.
+e.g.:
+```ts
+export interface IExampleCss {
+  'foo': string;
+  'bar-baz': string;
+}
+declare const styles: IExampleCss;
+
+export default styles;
+```
+
+A cleaner way is to expose all classes as named exports, this can be done if you enable the `namedExport`-option.
+e.g.
+```js
+  { test: /\.css$/, loader: 'typings-for-css-modules?modules&namedExport' }
+```
+
+As mentioned above, this requires classnames to only contain valid typescript characters, thus filtering out all classnames that do not match /^\w+$/i. (feel free to improve that regexp)
+In order to make sure that even classnames with non-legal characters are used it is highly recommended to use the `camelCase`-option as well, that - once passed to the css-loader - makes sure all classnames are transformed to valid variables.
+with:
+```js
+  { test: /\.css$/, loader: 'typings-for-css-modules?modules&namedExport&camelCase' }
+```
+using the following css:
+```css
+.foo {
+  color: white;
+}
+
+.bar-baz {
+  color: green;
+}
+```
+
+will generate the following typings file:
+```ts
+export const foo: string;
+export const barBaz: string;
+```
+
 ## Usage
 
 Keep your `webpack.config` as is just instead of using `css-loader` use `typings-for-css-modules-loader`
@@ -29,8 +78,8 @@ webpackConfig.module.loaders: [
 
 ## Example
 
-Imagine you have a file `~/my-project/src/component/MyComponent/component.scss` in your project with the following content:
-```
+Imagine you have a file `~/my-project/src/component/MyComponent/myComponent.scss` in your project with the following content:
+```css
 .some-class {
   // some styles
   &.someOtherClass {
@@ -42,8 +91,8 @@ Imagine you have a file `~/my-project/src/component/MyComponent/component.scss` 
 }
 ```
 
-Adding the `typings-for-css-modules-loader` will generate a file `~/my-project/src/component/MyComponent/mycomponent.scss.d.ts` that has the following content:
-```
+Adding the `typings-for-css-modules-loader` will generate a file `~/my-project/src/component/MyComponent/myComponent.scss.d.ts` that has the following content:
+```ts
 export interface IMyComponentScss {
   'some-class': string;
   'someOtherClass': string;
@@ -52,6 +101,14 @@ export interface IMyComponentScss {
 declare const styles: IMyComponentScss;
 
 export default styles;
+```
+
+### using `namedExport` with the `camelCase`-option
+Using the `namedExport` as well as the `camelCase` options the generated file will look as follow:
+```ts
+export const someClass: string;
+export const someOtherClass: string;
+export const someClassSayWhat: string;
 ```
 
 ### Example in Visual Studio Code
