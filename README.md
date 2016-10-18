@@ -55,6 +55,8 @@ export const foo: string;
 export const barBaz: string;
 ```
 
+ `css-loader` exports mappings to `exports.locals` which is incompatible with the `namedExport`-option unless paired with `extract-text-webpack-plugin` or `style-loader`. They move the exported properties from `exports.locals` to `exports` making them reuired for `namedExport` to work, and `namedExport` required for them to work. *Always combine usage of `extract-text-webpack-plugin` or `style-loader` with the `namedExport`-option.*
+
 ## Usage
 
 Keep your `webpack.config` as is just instead of using `css-loader` use `typings-for-css-modules-loader`
