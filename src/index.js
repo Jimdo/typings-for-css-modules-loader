@@ -25,8 +25,8 @@ module.exports = function(input) {
   const query = loaderUtils.parseQuery(this.query);
   const moduleMode = query.modules || query.module;
   if (!moduleMode) {
-    console.warn('Typings for CSS-Modules: option `modules` is not active - skipping extraction work...').red;
-    return delegateToCssLoader(ctx, input, callback);
+    console.warn('Typings for CSS-Modules: option `modules` is not active - skipping extraction work...'.red);
+    return delegateToCssLoader(this, input, callback);
   }
 
   // mock async step 2 - offer css loader a "fake" callback
