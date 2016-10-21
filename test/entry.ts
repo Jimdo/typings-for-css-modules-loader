@@ -1,5 +1,5 @@
-import stylesBase from './example.css';
-import stylesCamelCase from './example-camelcase.css';
+import {locals as stylesBase} from './example.css';
+import {locals as stylesCamelCase} from './example-camelcase.css';
 import * as stylesNamedExport from './example-namedexport.css';
 import * as stylesCamelCasedNamedExport from './example-camelcase-namedexport.css';
 

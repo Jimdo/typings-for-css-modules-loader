@@ -3,6 +3,5 @@ export interface IExampleCamelcaseCss {
   'bar-baz': string;
   'barBaz': string;
 }
-declare const styles: IExampleCamelcaseCss;
 
-export default styles;
+export const locals: IExampleCamelcaseCss;
