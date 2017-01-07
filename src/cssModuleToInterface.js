@@ -22,11 +22,11 @@ const allWordsRegexp = /^\w+$/i;
 export const filterNonWordClasses = (cssModuleKeys) => {
   const filteredClassNames = cssModuleKeys.filter(classname => allWordsRegexp.test(classname));
   if (filteredClassNames.length === cssModuleKeys.length) {
-    return [filteredClassNames, []];
+    return [filteredClassNames, [],];
   }
   const nonWordClassNames = cssModuleKeys.filter(classname => !allWordsRegexp.test(classname));
-  return [filteredClassNames, nonWordClassNames];
-}
+  return [filteredClassNames, nonWordClassNames,];
+};
 
 export const filenameToTypingsFilename = (filename) => {
   const dirName = path.dirname(filename);
