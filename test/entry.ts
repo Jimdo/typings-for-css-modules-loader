@@ -2,6 +2,7 @@ import {locals as stylesBase} from './example.css';
 import {locals as stylesCamelCase} from './example-camelcase.css';
 import * as stylesNamedExport from './example-namedexport.css';
 import * as stylesCamelCasedNamedExport from './example-camelcase-namedexport.css';
+import './example-no-css-modules.css';
 
 const foo = stylesBase.foo;
 const barBaz = stylesBase['bar-baz'];

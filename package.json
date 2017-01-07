@@ -8,8 +8,9 @@
     "prepublish": "npm run build",
     "pretest": "rm -f ./test/example*.css.d.ts",
     "test:diff": "(cd test; set -e; for f in example*css.d.ts; do diff $f expected-$f; done;)",
-    "test:run": "babel-node ./node_modules/webpack/bin/webpack --config ./test/webpack.config.babel.js && npm run test:diff",
-    "test": "npm run test:run > /dev/null 2>&1 && npm run test:run"
+    "test:run": "babel-node ./node_modules/webpack/bin/webpack --config ./test/webpack.config.babel.js",
+    "test:run-twice" : "npm run test:run > /dev/null 2>&1 && npm run test:run",
+    "test": "npm run test:run-twice && npm run test:diff"
   },
   "author": "Tim Sebastian <tim.sebastian@gmail.com>",
   "license": "MIT",

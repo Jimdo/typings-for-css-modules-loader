@@ -10,6 +10,7 @@ import {
   filenameToTypingsFilename,
 } from './cssModuleToInterface';
 import * as persist from './persist';
+import loggerCreator from './logger';
 
 function delegateToCssLoader(ctx, input, callback) {
   ctx.async = () => callback;
@@ -23,9 +24,11 @@ module.exports = function(input) {
   const callback = this.async();
 
   const query = loaderUtils.parseQuery(this.query);
+  const logger = loggerCreator(query.silent);
+
   const moduleMode = query.modules || query.module;
   if (!moduleMode) {
-    console.warn('Typings for CSS-Modules: option `modules` is not active - skipping extraction work...'.red);
+    logger('warn','Typings for CSS-Modules: option `modules` is not active - skipping extraction work...'.red);
     return delegateToCssLoader(this, input, callback);
   }
 
@@ -45,7 +48,7 @@ module.exports = function(input) {
     } else {
       const [cleanedDefinitions, skippedDefinitions,] = filterNonWordClasses(cssModuleKeys);
       if (skippedDefinitions.length > 0 && !query.camelCase) {
-        console.warn(`Typings for CSS-Modules: option 'namedExport' was set but 'camelCase' for the css-loader not.
+        logger('warn', `Typings for CSS-Modules: option 'namedExport' was set but 'camelCase' for the css-loader not.
 The following classes will not be available as named exports:
 ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
 `.yellow);
