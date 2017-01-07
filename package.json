@@ -47,7 +47,6 @@
     "webpack": "~1.13.2"
   },
   "peerDependencies": {
-    "babel-core": "^6.0.0",
     "css-loader": ">=0.23.1"
   },
   "repository": {
