@@ -135,4 +135,22 @@ The loader uses `css-loader`(https://github.com/webpack/css-loader) under the ho
 
 ## Known issues
 
- - There may be a lag or a reload necessary when adding a new style-file to your project as the typescript loader may take a while to "find" the new typings file.
+### Webpack rebuilds / builds slow
+
+As the loader generates typing files, it is wise to tell webpack to ignore them.
+The fix is luckily very simple. Webpack ships with a "WatchIgnorePlugin" out of the box.
+Simply add this to your webpack plugins:
+```
+plugins: [
+    new webpack.WatchIgnorePlugin([
+      /css\.d\.ts$/
+    ]),
+    ...
+  ]
+```
+where `css` is the file extension of your style files. If you use `sass` you need to put `sass` here instead. If you use `less`, `stylus` or any other style language use their file ending.
+
+### Typescript doesnt find the typings
+
+As the webpack process is independent from your typescript "runtime" it may take a while for typescript to pick up the typings.
+Any hints on how this could be fixed deterministically are welcome!
