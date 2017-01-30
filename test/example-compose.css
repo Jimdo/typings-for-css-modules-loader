@@ -1,0 +1,3 @@
+.test {
+  composes: shared-style from './example-shared.css';
+}
