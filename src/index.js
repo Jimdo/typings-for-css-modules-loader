@@ -40,7 +40,15 @@ module.exports = function(input) {
     const filename = this.resourcePath;
     const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);
 
-    let cssModuleKeys = Object.keys(this.exec(content, this.resource));
+    const keyRegex = /"([^"]+)":/g;
+    let match;
+    const cssModuleKeys = [];
+
+    while (match = keyRegex.exec(content)) {
+      if (cssModuleKeys.indexOf(match[1]) < 0) {
+        cssModuleKeys.push(match[1]);
+      }
+    }
 
     let cssModuleDefinition;
     if (!query.namedExport) {
