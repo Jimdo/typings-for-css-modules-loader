@@ -1,4 +1,5 @@
 import path from 'path';
+import os from 'os';
 
 const filenameToInterfaceName = (filename) => {
   return path.basename(filename)
@@ -9,13 +10,13 @@ const filenameToInterfaceName = (filename) => {
 const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, indent = '  ') => {
   return cssModuleKeys
     .map((key) => `${indent}'${key}': string;`)
-    .join('\n');
+    .join(os.EOL);
 };
 
 const cssModuleToNamedExports = (cssModuleKeys) => {
   return cssModuleKeys
     .map((key) => `export const ${key}: string;`)
-    .join('\n');
+    .join(os.EOL);
 };
 
 const allWordsRegexp = /^\w+$/i;
