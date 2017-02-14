@@ -1,16 +1,21 @@
 import fs from 'graceful-fs';
-import crypto from 'crypto';
+import os from 'os';
 
 export const writeToFileIfChanged = (filename, content) => {
-  try {
+  if (fs.existsSync(filename)) {
     const currentInput = fs.readFileSync(filename, 'utf-8');
-    const oldHash = crypto.createHash('md5').update(currentInput).digest('hex');
-    const newHash = crypto.createHash('md5').update(content).digest('hex');
-    // the definitions haven't changed - ignore this
-    if (oldHash === newHash) {
-      return false;
+
+    if (currentInput !== content) {
+      writeFile(filename, content);
     }
-  } finally {
-    fs.writeFileSync(filename, content);
+  } else {
+    writeFile(filename, content);
   }
+};
+
+const writeFile = (filename, content) => {
+  //Replace new lines with OS-specific new lines
+  content = content.replace(/\n/g, os.EOL);
+
+  fs.writeFileSync(filename, content, 'utf8');
 };
