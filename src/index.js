@@ -40,7 +40,7 @@ module.exports = function(input) {
     const filename = this.resourcePath;
     const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);
 
-    const keyRegex = /"([^"]+)":/g;
+    const keyRegex = /"([^\\"]+)":/g;
     let match;
     const cssModuleKeys = [];
 
