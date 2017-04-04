@@ -1,6 +1,5 @@
 export interface IExampleNamedExportAndInterfaceCss {
   'foo': string;
-  'bar-baz': string;
   'barBaz': string;
 }
 

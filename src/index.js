@@ -65,7 +65,7 @@ ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
 
     if (query.namedExport && query.interface) {
       logSkippedDefWarning();
-      cssModuleDefinition = generateCombinedInterfaceAndNamedExports(cssModuleKeys, cleanedDefinitions, filename);
+      cssModuleDefinition = generateCombinedInterfaceAndNamedExports(cleanedDefinitions, filename);
     } else if (!query.namedExport) {
       cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename);
     } else {
