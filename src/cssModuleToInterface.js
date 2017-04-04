@@ -51,3 +51,15 @@ ${interfaceProperties}
 export const locals: ${interfaceName};
 `);
 };
+
+export const generateCombinedInterfaceAndNamedExports = (cssModuleKeys, cleanedDefinitions, filename, indent) => {
+  const interfaceName = filenameToInterfaceName(filename);
+  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, indent);
+  return (
+    `export interface ${interfaceName} {
+${interfaceProperties}
+}
+
+${cssModuleToNamedExports(cleanedDefinitions)}
+`);
+}
