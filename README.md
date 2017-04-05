@@ -21,9 +21,8 @@ export interface IExampleCss {
   'foo': string;
   'bar-baz': string;
 }
-declare const styles: IExampleCss;
 
-export default styles;
+declare const locals: IExampleCss;
 ```
 
 A cleaner way is to expose all classes as named exports, this can be done if you enable the `namedExport`-option.
@@ -56,6 +55,37 @@ export const barBaz: string;
 ```
 
  `css-loader` exports mappings to `exports.locals` which is incompatible with the `namedExport`-option unless paired with `extract-text-webpack-plugin` or `style-loader`. They move the exported properties from `exports.locals` to `exports` making them reuired for `namedExport` to work, and `namedExport` required for them to work. *Always combine usage of `extract-text-webpack-plugin` or `style-loader` with the `namedExport`-option.*
+
+### `interface`-option
+
+Specify the interface option along with the namedExport option to also generate an interface. This option is useful if you need to use both
+the named exports (for style-loader compatibility), but also have a reason to use the interface (for instance, to refer to the type from TypeScript).
+
+with:
+```js
+  { test: /\.css$/, loader: 'typings-for-css-modules?modules&namedExport&interface&camelCase' }
+```
+using the following css:
+```css
+.foo {
+  color: white;
+}
+
+.bar-baz {
+  color: green;
+}
+```
+
+will generate the following typings file:
+```ts
+export interface IExampleNamedExportAndInterfaceCss {
+  'foo': string;
+  'barBaz': string;
+}
+
+export const foo: string;
+export const barBaz: string;
+```
 
 ### `silent`-option
 To silence the loader because you get annoyed by its warnings or for other reasons, you can simply pass the "silent" query to the loader and it will shut up.
