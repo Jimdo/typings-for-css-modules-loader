@@ -6,6 +6,7 @@ import 'colour';
 import {
   filterNonWordClasses,
   generateNamedExports,
+  generateCombinedInterfaceAndNamedExports,
   generateGenericExportInterface,
   filenameToTypingsFilename,
 } from './cssModuleToInterface';
@@ -51,16 +52,25 @@ module.exports = function(input) {
     }
 
     let cssModuleDefinition;
-    if (!query.namedExport) {
-      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename);
-    } else {
-      const [cleanedDefinitions, skippedDefinitions,] = filterNonWordClasses(cssModuleKeys);
+    const [cleanedDefinitions, skippedDefinitions,] = filterNonWordClasses(cssModuleKeys);
+
+    const logSkippedDefWarning = () => {
       if (skippedDefinitions.length > 0 && !query.camelCase) {
         logger('warn', `Typings for CSS-Modules: option 'namedExport' was set but 'camelCase' for the css-loader not.
-The following classes will not be available as named exports:
+The following classes will not be available as named exports for file ${filename}:
 ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
 `.yellow);
       }
+    };
+
+    if (query.namedExport && query.interface) {
+      logSkippedDefWarning();
+      cssModuleDefinition = generateCombinedInterfaceAndNamedExports(cleanedDefinitions, filename);
+    } else if (!query.namedExport) {
+      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename);
+    } else {
+      logSkippedDefWarning();
+
       cssModuleDefinition = generateNamedExports(cleanedDefinitions);
     }
     persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleDefinition);

@@ -12,7 +12,8 @@ module.exports = {
       { test: /example-namedexport\.css$/, loader: '../src/index.js?modules&namedExport' },
       { test: /example-camelcase-namedexport\.css$/, loader: '../src/index.js?modules&camelCase&namedExport' },
       { test: /example-no-css-modules\.css$/, loader: '../src/index.js' },
-      { test: /example-compose\.css$/, loader: '../src/index.js?modules&camelCase&namedExport' }
+      { test: /example-compose\.css$/, loader: '../src/index.js?modules&camelCase&namedExport' },
+      { test: /example-named-export-and-interface\.css$/, loader: '../src/index.js?modules&camelCase&namedExport&interface' }
     ]
   }
 };
