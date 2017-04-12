@@ -6,15 +6,15 @@ const filenameToInterfaceName = (filename) => {
     .replace(/\W+(\w)/g, (_, c) => c.toUpperCase());
 };
 
-const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, indent = '  ') => {
+const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, indent = '  ', useSemicolons = true) => {
   return cssModuleKeys
-    .map((key) => `${indent}'${key}': string;`)
+    .map((key) => `${indent}'${key}': string${useSemicolons ? ';' : ''}`)
     .join('\n');
 };
 
-const cssModuleToNamedExports = (cssModuleKeys) => {
+const cssModuleToNamedExports = (cssModuleKeys, useSemicolons) => {
   return cssModuleKeys
-    .map((key) => `export const ${key}: string;`)
+    .map((key) => `export const ${key}: string${useSemicolons ? ';' : ''}`)
     .join('\n');
 };
 
@@ -34,20 +34,20 @@ export const filenameToTypingsFilename = (filename) => {
   return path.join(dirName, `${baseName}.d.ts`);
 };
 
-export const generateNamedExports = (cssModuleKeys) => {
-  const namedExports = cssModuleToNamedExports(cssModuleKeys);
+export const generateNamedExports = (cssModuleKeys, useSemicolons = true) => {
+  const namedExports = cssModuleToNamedExports(cssModuleKeys, useSemicolons);
   return (`${namedExports}
 `);
 };
 
-export const generateGenericExportInterface = (cssModuleKeys, filename, indent) => {
+export const generateGenericExportInterface = (cssModuleKeys, filename, indent, useSemicolons = true) => {
   const interfaceName = filenameToInterfaceName(filename);
-  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, indent);
+  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, indent, useSemicolons);
   return (
 `export interface ${interfaceName} {
 ${interfaceProperties}
 }
 
-export const locals: ${interfaceName};
+export const locals: ${interfaceName}${useSemicolons ? ';' : ''}
 `);
 };
