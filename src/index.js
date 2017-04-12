@@ -32,6 +32,9 @@ module.exports = function(input) {
     return delegateToCssLoader(this, input, callback);
   }
 
+  // default to using semiColons
+  query.noSemicolons = query.noSemicolons? true : false;
+
   // mock async step 2 - offer css loader a "fake" callback
   this.async = () => (err, content) => {
     if (err) {
@@ -44,7 +47,7 @@ module.exports = function(input) {
     let match;
     const cssModuleKeys = [];
 
-    while (match = keyRegex.exec(content)) {
+    while ((match = keyRegex.exec(content))) {
       if (cssModuleKeys.indexOf(match[1]) < 0) {
         cssModuleKeys.push(match[1]);
       }
@@ -52,7 +55,7 @@ module.exports = function(input) {
 
     let cssModuleDefinition;
     if (!query.namedExport) {
-      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename);
+      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename, '  ', query.noSemicolons);
     } else {
       const [cleanedDefinitions, skippedDefinitions,] = filterNonWordClasses(cssModuleKeys);
       if (skippedDefinitions.length > 0 && !query.camelCase) {
@@ -61,7 +64,7 @@ The following classes will not be available as named exports:
 ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
 `.yellow);
       }
-      cssModuleDefinition = generateNamedExports(cleanedDefinitions);
+      cssModuleDefinition = generateNamedExports(cleanedDefinitions, query.noSemicolons);
     }
     persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleDefinition);
     // mock async step 3 - make `async` return the actual callback again before calling the 'real' css-loader

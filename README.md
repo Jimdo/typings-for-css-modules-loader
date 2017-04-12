@@ -65,6 +65,9 @@ e.g.:
   { test: /\.css$/, loader: 'typings-for-css-modules?silent' }
 ```
 
+### `noSemicolons`-option
+Prevents outputted lines from having semicolons at the end. This is useful when you want to enforce no semicolons with a linter. The default is to add semicolons.
+
 ## Usage
 
 Keep your `webpack.config` as is just instead of using `css-loader` use `typings-for-css-modules-loader`
