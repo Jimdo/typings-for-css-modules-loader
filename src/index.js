@@ -14,10 +14,10 @@ import loggerCreator from './logger';
 
 function delegateToCssLoader(ctx, input, callback) {
   ctx.async = () => callback;
-  cssLoader.call(ctx, input);
+  cssLoader.call(ctx, ...input);
 }
 
-module.exports = function(input) {
+module.exports = function(...input) {
   if(this.cacheable) this.cacheable();
 
   // mock async step 1 - css loader is async, we need to intercept this so we get async ourselves
@@ -67,5 +67,5 @@ ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
     // mock async step 3 - make `async` return the actual callback again before calling the 'real' css-loader
     delegateToCssLoader(this, input, callback);
   };
-  cssLocalsLoader.call(this, input);
+  cssLocalsLoader.call(this, ...input);
 };
