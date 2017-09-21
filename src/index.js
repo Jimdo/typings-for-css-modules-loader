@@ -63,6 +63,10 @@ ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
       }
       cssModuleDefinition = generateNamedExports(cleanedDefinitions);
     }
+    if (cssModuleDefinition.trim() === '') {
+      // Ensure empty CSS modules export something
+      cssModuleDefinition = 'export {};\n';
+    }
     if (query.banner) {
       // Prefix banner to CSS module
       cssModuleDefinition = query.banner + '\n' + cssModuleDefinition;
