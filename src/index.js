@@ -63,6 +63,10 @@ ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
       }
       cssModuleDefinition = generateNamedExports(cleanedDefinitions);
     }
+    if (query.banner) {
+      // Prefix banner to CSS module
+      cssModuleDefinition = query.banner + '\n' + cssModuleDefinition;
+    }
     persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleDefinition);
     // mock async step 3 - make `async` return the actual callback again before calling the 'real' css-loader
     delegateToCssLoader(this, input, callback);
