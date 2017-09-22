@@ -131,6 +131,15 @@ export const someClassSayWhat: string;
 ### Example in Visual Studio Code
 ![typed-css-modules](https://cloud.githubusercontent.com/assets/749171/16340497/c1cb6888-3a28-11e6-919b-f2f51a282bba.gif)
 
+If you encounter the following errors:
+```
+error TS1192: Module '"xxxxx/xxxx/src/style.sass"' has no default export.
+```
+maybe you should export the styles as following:
+```
+import * as styles from './style.sass';
+```
+
 ## Support
 
 As the loader just acts as an intermediary it can handle all kind of css preprocessors (`sass`, `scss`, `stylus`, `less`, ...).
