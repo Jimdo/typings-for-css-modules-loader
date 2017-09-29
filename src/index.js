@@ -38,13 +38,16 @@ module.exports = function(...input) {
       return callback(err);
     }
     const filename = this.resourcePath;
-    const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);
+    const cssModuleInterfaceFilename = filenameToTypingsFilename(filename, query.pathPrefix, this.options.context);
+    if (!cssModuleInterfaceFilename) {
+      return callback('invalid typings filename; check your typings-for-css-modules loader configuration.');
+    }
 
     const keyRegex = /"([^\\"]+)":/g;
     let match;
     const cssModuleKeys = [];
 
-    while (match = keyRegex.exec(content)) {
+    while ((match = keyRegex.exec(content))) {
       if (cssModuleKeys.indexOf(match[1]) < 0) {
         cssModuleKeys.push(match[1]);
       }
