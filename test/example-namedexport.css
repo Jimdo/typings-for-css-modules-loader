@@ -5,3 +5,104 @@
 .bar-baz {
   color: green;
 }
+
+/* All of the below are reserved words in JavaScript and cannot be emitted as a named export */
+.break {
+  color: red;
+}
+.case {
+  color: red;
+}
+.catch {
+  color: red;
+}
+.class {
+  color: red;
+}
+.const {
+  color: red;
+}
+.continue {
+  color: red;
+}
+.debugger {
+  color: red;
+}
+.default {
+  color: red;
+}
+.delete {
+  color: red;
+}
+.do {
+  color: red;
+}
+.else {
+  color: red;
+}
+.export {
+  color: red;
+}
+.extends {
+  color: red;
+}
+.finally {
+  color: red;
+}
+.for {
+  color: red;
+}
+.function {
+  color: red;
+}
+.if {
+  color: red;
+}
+.import {
+  color: red;
+}
+.in {
+  color: red;
+}
+.instanceof {
+  color: red;
+}
+.new {
+  color: red;
+}
+.return {
+  color: red;
+}
+.super {
+  color: red;
+}
+.switch {
+  color: red;
+}
+.this {
+  color: red;
+}
+.throw {
+  color: red;
+}
+.try {
+  color: red;
+}
+.typeof {
+  color: red;
+}
+.var {
+  color: red;
+}
+.void {
+  color: red;
+}
+.while {
+  color: red;
+}
+.with {
+  color: red;
+}
+.yield {
+  color: red;
+}

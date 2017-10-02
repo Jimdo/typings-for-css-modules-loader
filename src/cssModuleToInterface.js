@@ -28,6 +28,52 @@ export const filterNonWordClasses = (cssModuleKeys) => {
   return [filteredClassNames, nonWordClassNames,];
 };
 
+// Documented here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Reserved_keywords_as_of_ECMAScript_2015
+const reservedWords = [
+  'break',
+  'case',
+  'catch',
+  'class',
+  'const',
+  'continue',
+  'debugger',
+  'default',
+  'delete',
+  'do',
+  'else',
+  'export',
+  'extends',
+  'finally',
+  'for',
+  'function',
+  'if',
+  'import',
+  'in',
+  'instanceof',
+  'new',
+  'return',
+  'super',
+  'switch',
+  'this',
+  'throw',
+  'try',
+  'typeof',
+  'var',
+  'void',
+  'while',
+  'with',
+  'yield'
+];
+export const filterReservedWordClasses = (cssModuleKeys) => {
+  const filteredClassNames = cssModuleKeys.filter(classname => reservedWords.indexOf(classname) === -1);
+  if (filteredClassNames.length === cssModuleKeys.length) {
+    return [filteredClassNames, [],];
+  }
+  const reservedWordClassNames = cssModuleKeys.filter(classname => reservedWords.indexOf(classname) !== -1);
+  return [filteredClassNames, reservedWordClassNames,];
+};
+
+
 export const filenameToTypingsFilename = (filename) => {
   const dirName = path.dirname(filename);
   const baseName = path.basename(filename);
