@@ -29,14 +29,14 @@ export default styles;
 A cleaner way is to expose all classes as named exports, this can be done if you enable the `namedExport`-option.
 e.g.
 ```js
-  { test: /\.css$/, loader: 'typings-for-css-modules?modules&namedExport' }
+  { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules&namedExport' }
 ```
 
 As mentioned above, this requires classnames to only contain valid typescript characters, thus filtering out all classnames that do not match /^\w+$/i. (feel free to improve that regexp)
 In order to make sure that even classnames with non-legal characters are used it is highly recommended to use the `camelCase`-option as well, that - once passed to the css-loader - makes sure all classnames are transformed to valid variables.
 with:
 ```js
-  { test: /\.css$/, loader: 'typings-for-css-modules?modules&namedExport&camelCase' }
+  { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules&namedExport&camelCase' }
 ```
 using the following css:
 ```css
@@ -62,7 +62,7 @@ To silence the loader because you get annoyed by its warnings or for other reaso
 e.g.:
 
 ```js
-  { test: /\.css$/, loader: 'typings-for-css-modules?silent' }
+  { test: /\.css$/, loader: 'typings-for-css-modules-loader?silent' }
 ```
 
 ### `banner`-option
@@ -88,8 +88,8 @@ webpackConfig.module.loaders: [
 after:
 ```js
 webpackConfig.module.loaders: [
-    { test: /\.css$/, loader: 'typings-for-css-modules?modules' }
-    { test: /\.scss$/, loader: 'typings-for-css-modules?modules&sass' }
+    { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules' }
+    { test: /\.scss$/, loader: 'typings-for-css-modules-loader?modules&sass' }
 ];
 ```
 
