@@ -5,6 +5,7 @@ import 'colour';
 
 import {
   filterNonWordClasses,
+  filterReservedWordClasses,
   generateNamedExports,
   generateGenericExportInterface,
   filenameToTypingsFilename,
@@ -61,7 +62,17 @@ The following classes will not be available as named exports:
 ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
 `.yellow);
       }
-      cssModuleDefinition = generateNamedExports(cleanedDefinitions);
+
+      const [nonReservedWordDefinitions, reservedWordDefinitions,] = filterReservedWordClasses(cleanedDefinitions);
+      if (reservedWordDefinitions.length > 0) {
+        logger('warn', `Your css contains classes which are reserved words in JavaScript.
+Consequently the following classes will not be available as named exports:
+${reservedWordDefinitions.map(rwd => ` - "${rwd}"`).join('\n').red}
+These can be accessed using the object literal syntax; eg styles['delete'] instead of styles.delete.
+`.yellow);
+      }
+
+      cssModuleDefinition = generateNamedExports(nonReservedWordDefinitions);
     }
     if (cssModuleDefinition.trim() === '') {
       // Ensure empty CSS modules export something
