@@ -51,9 +51,11 @@ module.exports = function(...input) {
       }
     }
 
+    query.orderAlphabetically = !!query.orderAlphabetically;
+
     let cssModuleDefinition;
     if (!query.namedExport) {
-      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename);
+      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename, query.orderAlphabetically);
     } else {
       const [cleanedDefinitions, skippedDefinitions,] = filterNonWordClasses(cssModuleKeys);
       if (skippedDefinitions.length > 0 && !query.camelCase) {
@@ -72,7 +74,7 @@ These can be accessed using the object literal syntax; eg styles['delete'] inste
 `.yellow);
       }
 
-      cssModuleDefinition = generateNamedExports(nonReservedWordDefinitions);
+      cssModuleDefinition = generateNamedExports(nonReservedWordDefinitions, query.orderAlphabetically);
     }
     if (cssModuleDefinition.trim() === '') {
       // Ensure empty CSS modules export something
