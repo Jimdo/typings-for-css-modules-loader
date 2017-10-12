@@ -6,16 +6,22 @@ const filenameToInterfaceName = (filename) => {
     .replace(/\W+(\w)/g, (_, c) => c.toUpperCase());
 };
 
-const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, indent = '  ') => {
-  return cssModuleKeys
+const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, orderAlphabetically, indent = '  ') => {
+  return sortCssModuleKeys(cssModuleKeys, orderAlphabetically)
     .map((key) => `${indent}'${key}': string;`)
     .join('\n');
 };
 
-const cssModuleToNamedExports = (cssModuleKeys) => {
-  return cssModuleKeys
+const cssModuleToNamedExports = (cssModuleKeys, orderAlphabetically) => {
+  return sortCssModuleKeys(cssModuleKeys, orderAlphabetically)
     .map((key) => `export const ${key}: string;`)
     .join('\n');
+};
+
+const sortCssModuleKeys = (cssModuleKeys, orderAlphabetically) => {
+  return orderAlphabetically
+    ? [...cssModuleKeys].sort()
+    : [...cssModuleKeys]
 };
 
 const allWordsRegexp = /^\w+$/i;
@@ -80,15 +86,15 @@ export const filenameToTypingsFilename = (filename) => {
   return path.join(dirName, `${baseName}.d.ts`);
 };
 
-export const generateNamedExports = (cssModuleKeys) => {
-  const namedExports = cssModuleToNamedExports(cssModuleKeys);
+export const generateNamedExports = (cssModuleKeys, orderAlphabetically) => {
+  const namedExports = cssModuleToNamedExports(cssModuleKeys, orderAlphabetically);
   return (`${namedExports}
 `);
 };
 
-export const generateGenericExportInterface = (cssModuleKeys, filename, indent) => {
+export const generateGenericExportInterface = (cssModuleKeys, filename, orderAlphabetically, indent) => {
   const interfaceName = filenameToInterfaceName(filename);
-  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, indent);
+  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, orderAlphabetically, indent);
   return (
 `export interface ${interfaceName} {
 ${interfaceProperties}
