@@ -57,6 +57,14 @@ export const barBaz: string;
 
 `css-loader` exports mappings to `exports.locals` which is incompatible with the `namedExport`-option unless paired with `extract-text-webpack-plugin` or `style-loader`. They move the exported properties from `exports.locals` to `exports` making them required for `namedExport` to work, and `namedExport` required for them to work. *Always combine usage of `extract-text-webpack-plugin` or `style-loader` with the `namedExport`-option.*
 
+### `orderAlphabetically`-option
+Orders generated exports or interface properties alphabetically. This is useful when committing the .d.ts files as the default ordering is not always consistent and can change from commit to commit.
+e.g.:
+
+```js
+  { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules&orderAlphabetically' }
+```
+
 ### `silent`-option
 To silence the loader because you get annoyed by its warnings or for other reasons, you can simply pass the "silent" query to the loader and it will shut up.
 e.g.:
