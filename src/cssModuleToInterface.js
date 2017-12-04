@@ -95,5 +95,6 @@ ${interfaceProperties}
 }
 
 export const locals: ${interfaceName};
+export default locals;
 `);
 };
