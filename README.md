@@ -80,7 +80,7 @@ Keep your `webpack.config` as is just instead of using `css-loader` use `typings
 before:
 ```js
 webpackConfig.module.loaders: [
-    { test: /\.css$/, loader: 'css?modules' }
+    { test: /\.css$/, loader: 'css?modules' },
     { test: /\.scss$/, loader: 'css?modules&sass' }
 ];
 ```
@@ -88,7 +88,7 @@ webpackConfig.module.loaders: [
 after:
 ```js
 webpackConfig.module.loaders: [
-    { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules' }
+    { test: /\.css$/, loader: 'typings-for-css-modules-loader?modules' },
     { test: /\.scss$/, loader: 'typings-for-css-modules-loader?modules&sass' }
 ];
 ```
