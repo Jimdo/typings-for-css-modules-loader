@@ -1,6 +1,6 @@
 {
   "name": "typings-for-css-modules-loader",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Drop-in replacement for css-loader to generate typings for your CSS-Modules on the fly in webpack",
   "main": "lib/index.js",
   "scripts": {
