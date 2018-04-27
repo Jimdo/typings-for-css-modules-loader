@@ -6,9 +6,10 @@ const filenameToInterfaceName = (filename) => {
     .replace(/\W+(\w)/g, (_, c) => c.toUpperCase());
 };
 
-const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, indent = '  ') => {
+const cssModuleToTypescriptInterfaceProperties = (cssModuleKeys, isSingleQuote = true , indent = '  ') => {
+  const quote = isSingleQuote ? "'": '"';
   return cssModuleKeys
-    .map((key) => `${indent}'${key}': string;`)
+    .map((key) => `${indent}${quote}${key}${quote}: string;`)
     .join('\n');
 };
 
@@ -86,9 +87,9 @@ export const generateNamedExports = (cssModuleKeys) => {
 `);
 };
 
-export const generateGenericExportInterface = (cssModuleKeys, filename, indent) => {
+export const generateGenericExportInterface = (cssModuleKeys, filename, isSingleQuote, indent) => {
   const interfaceName = filenameToInterfaceName(filename);
-  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, indent);
+  const interfaceProperties = cssModuleToTypescriptInterfaceProperties(cssModuleKeys, isSingleQuote, indent);
   return (
 `export interface ${interfaceName} {
 ${interfaceProperties}

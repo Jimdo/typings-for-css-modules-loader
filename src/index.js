@@ -53,7 +53,7 @@ module.exports = function(...input) {
 
     let cssModuleDefinition;
     if (!query.namedExport) {
-      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename);
+      cssModuleDefinition = generateGenericExportInterface(cssModuleKeys, filename, query.isSingleQuote, query.indent);
     } else {
       const [cleanedDefinitions, skippedDefinitions,] = filterNonWordClasses(cssModuleKeys);
       if (skippedDefinitions.length > 0 && !query.camelCase) {
