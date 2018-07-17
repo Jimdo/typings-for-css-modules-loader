@@ -82,7 +82,7 @@ These can be accessed using the object literal syntax; eg styles['delete'] inste
       // Prefix banner to CSS module
       cssModuleDefinition = query.banner + '\n' + cssModuleDefinition;
     }
-    persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleDefinition);
+    persist.writeToFileIfChanged(cssModuleInterfaceFilename, cssModuleDefinition, query);
     // mock async step 3 - make `async` return the actual callback again before calling the 'real' css-loader
     delegateToCssLoader(this, input, callback);
   };
