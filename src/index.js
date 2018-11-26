@@ -1,7 +1,6 @@
 import cssLoader from 'css-loader';
 import cssLocalsLoader from 'css-loader/locals';
 import loaderUtils from 'loader-utils';
-import 'colour';
 
 import {
   filterNonWordClasses,
@@ -24,12 +23,12 @@ module.exports = function(...input) {
   // mock async step 1 - css loader is async, we need to intercept this so we get async ourselves
   const callback = this.async();
 
-  const query = loaderUtils.parseQuery(this.query);
+  const query = this.query ? loaderUtils.parseQuery(this.query) : {};
   const logger = loggerCreator(query.silent);
 
   const moduleMode = query.modules || query.module;
   if (!moduleMode) {
-    logger('warn','Typings for CSS-Modules: option `modules` is not active - skipping extraction work...'.red);
+    logger('warn','Typings for CSS-Modules: option `modules` is not active - skipping extraction work...');
     return delegateToCssLoader(this, input, callback);
   }
 
@@ -59,17 +58,17 @@ module.exports = function(...input) {
       if (skippedDefinitions.length > 0 && !query.camelCase) {
         logger('warn', `Typings for CSS-Modules: option 'namedExport' was set but 'camelCase' for the css-loader not.
 The following classes will not be available as named exports:
-${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
-`.yellow);
+${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n')}
+`);
       }
 
       const [nonReservedWordDefinitions, reservedWordDefinitions,] = filterReservedWordClasses(cleanedDefinitions);
       if (reservedWordDefinitions.length > 0) {
         logger('warn', `Your css contains classes which are reserved words in JavaScript.
 Consequently the following classes will not be available as named exports:
-${reservedWordDefinitions.map(rwd => ` - "${rwd}"`).join('\n').red}
+${reservedWordDefinitions.map(rwd => ` - "${rwd}"`).join('\n')}
 These can be accessed using the object literal syntax; eg styles['delete'] instead of styles.delete.
-`.yellow);
+`);
       }
 
       cssModuleDefinition = generateNamedExports(nonReservedWordDefinitions);
