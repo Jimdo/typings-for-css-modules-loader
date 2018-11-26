@@ -2,3 +2,4 @@ node_modules
 lib
 bundle.js
 example*.css.d.ts
+.idea
