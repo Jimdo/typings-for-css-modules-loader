@@ -60,6 +60,7 @@ module.exports = function(...input) {
         logger('warn', `Typings for CSS-Modules: option 'namedExport' was set but 'camelCase' for the css-loader not.
 The following classes will not be available as named exports:
 ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
+References were found in "${filename}".
 `.yellow);
       }
 
@@ -69,6 +70,7 @@ ${skippedDefinitions.map(sd => ` - "${sd}"`).join('\n').red}
 Consequently the following classes will not be available as named exports:
 ${reservedWordDefinitions.map(rwd => ` - "${rwd}"`).join('\n').red}
 These can be accessed using the object literal syntax; eg styles['delete'] instead of styles.delete.
+References were found in "${filename}".
 `.yellow);
       }
 
